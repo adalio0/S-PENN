@@ -5,7 +5,10 @@ import os
 import sys
 import skimage.io
 import newVisualize
+import time
 
+
+startTime = time.time()
 # Import Mask RCNN
 sys.path.append("D:/Mask_RCNN-master")  # To find local version of the library
 from mrcnn import utils
@@ -36,24 +39,14 @@ model.load_weights(modelPath, by_name=True)
 
 # COCO Class names
 # Index of the class in the list is its ID
-class_names = ['_', 'person', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_',
-               '_', '_', '_', '_',
-               '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_',
-               '_', '_', '_', '_', '_', '_',
-               '_', '_', '_']
+class_names = ['', 'person', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+               '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+               '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+               '', '', '', '', '', '']
 
 # Load a random image from the images folder
-srcName = 'Vic-3'
+srcName = 'Vic-4'
+
 destName = 'testOutput/' + srcName + '_segmented.jpg'
 image = skimage.io.imread('testInput/' + srcName +  '.jpg')
 
@@ -67,5 +60,8 @@ print('Saving Image...')
 r = results[0]
 newVisualize.save_image(image, r['rois'], r['masks'], r['class_ids'],
                             class_names, r['scores'], dest=destName)
+endTime = time.time() - startTime
 
 print('Image Saved.')
+
+print('elapsed time:', endTime)
